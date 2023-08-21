@@ -2,11 +2,36 @@ from menu import Menu, MenuItem
 from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
 
-espresso = MenuItem("espresso", 50, 0, 18, 1.5)
-latte = MenuItem("latte", 200, 150, 24, 2.5)
-cappuccino = MenuItem("cappuccino", 250, 100, 24, 3.0)
+money_machine = MoneyMachine()
+coffee_maker = CoffeeMaker()
+menu = Menu()
+is_on = True
 
-#TODO: Prompt user by asking "What would you like?"
+
+def main():
+    """
+    Main function to run the coffee machine simulator.
+    """
+    print("Welcome to the Coffee Machine!")
+
+    while is_on:
+        options = menu.get_items()
+        choice = input(f"What would you like? {options} ").lower()
+
+        if choice == "off":
+            print("Turning off the coffee machine.")
+            is_on = False
+
+        elif choice == "report":
+            coffee_maker.report()
+            money_machine.report()
+
+        else:
+            order = menu.find_drink(choice)
+
+            if coffee_maker.is_resource_sufficient(order) and money_machine.make_payment(order.cost):
+                coffee_maker.make_coffee(order)
 
 
-print(latte.ingredients)
+if __name__ == "__main__":
+    main()
