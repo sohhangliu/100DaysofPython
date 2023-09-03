@@ -12,7 +12,6 @@ Soh Hang Liu
 """
 
 question_bank = []
-test
 
 for question_number in question_data["results"]:
     text = question_number["question"]
